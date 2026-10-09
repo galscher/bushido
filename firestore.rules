@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function me(uid) { return request.auth != null && request.auth.uid == uid; }
+    function small() { return request.resource.data.size() < 40; }
+    // leaderboards: everyone reads, each player writes only their own row
+    match /live/{uid}   { allow read: if true; allow write: if me(uid) && small(); }
+    match /scores/{uid} { allow read: if true; allow write: if me(uid) && small(); }
+    match /speed/{uid}  { allow read: if true; allow write: if me(uid) && small(); }
+    // bug reports and ideas: a player can send, nobody can read them from the game (the owner reads them in the Firebase console)
+    match /tickets/{uid} { allow create, update: if me(uid); }
+    match /tickets/{uid}/msgs/{id} { allow create: if me(uid) && request.resource.data.message is string && request.resource.data.message.size() < 3100; }
+    // each player's cloud save is private
+    match /data/users/{uid}/{rest=**} { allow read, write: if me(uid); }
+  }
+}
