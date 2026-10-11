@@ -295,5 +295,113 @@
    "src": "art/guard_por.webp",
    "keyed": 1
   }
+ },
+ "fujin": {
+  "idle": {
+   "src": "art/fujin_idle.webp",
+   "ax": 0.598,
+   "w": 420,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/fujin_blk.webp",
+   "ax": 0.401,
+   "w": 502,
+   "h": 528,
+   "hs": 1.015
+  },
+  "atk": {
+   "src": "art/fujin_atk.webp",
+   "ax": 0.422,
+   "w": 514,
+   "h": 490,
+   "hs": 0.942
+  },
+  "por": {
+   "src": "art/fujin_por.webp",
+   "keyed": 1
+  }
+ },
+ "raijin": {
+  "idle": {
+   "src": "art/raijin_idle.webp",
+   "ax": 0.431,
+   "w": 417,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/raijin_blk.webp",
+   "ax": 0.505,
+   "w": 427,
+   "h": 569,
+   "hs": 1.094
+  },
+  "atk": {
+   "src": "art/raijin_atk.webp",
+   "ax": 0.402,
+   "w": 470,
+   "h": 489,
+   "hs": 0.94
+  },
+  "por": {
+   "src": "art/raijin_por.webp",
+   "keyed": 1
+  }
+ },
+ "nobunaga": {
+  "idle": {
+   "src": "art/nobunaga_idle.webp",
+   "ax": 0.448,
+   "w": 490,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/nobunaga_blk.webp",
+   "ax": 0.574,
+   "w": 531,
+   "h": 602,
+   "hs": 1.158
+  },
+  "atk": {
+   "src": "art/nobunaga_atk.webp",
+   "ax": 0.501,
+   "w": 578,
+   "h": 578,
+   "hs": 1.112
+  },
+  "por": {
+   "src": "art/nobunaga_por.webp",
+   "keyed": 1
+  }
+ },
+ "shingen": {
+  "idle": {
+   "src": "art/shingen_idle.webp",
+   "ax": 0.596,
+   "w": 458,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/shingen_blk.webp",
+   "ax": 0.593,
+   "w": 464,
+   "h": 531,
+   "hs": 1.021
+  },
+  "atk": {
+   "src": "art/shingen_atk.webp",
+   "ax": 0.588,
+   "w": 486,
+   "h": 516,
+   "hs": 0.992
+  },
+  "por": {
+   "src": "art/shingen_por.webp",
+   "keyed": 1
+  }
  }
 }

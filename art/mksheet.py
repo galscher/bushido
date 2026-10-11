@@ -11,14 +11,34 @@ from scipy import ndimage as ndi
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 
+TIGHT = False
+
+
 def key_mask(a):
     h, w, _ = a.shape
     edge = np.concatenate([a[:6].reshape(-1, 3), a[-6:].reshape(-1, 3), a[:, :6].reshape(-1, 3), a[:, -6:].reshape(-1, 3)])
     bg = np.median(edge, axis=0)
     r, g, b = a[..., 0], a[..., 1], a[..., 2]
     d = np.sqrt(((a - bg) ** 2).sum(-1))
-    bglike = (d < 48) | ((g > r + 45) & (g > b + 45) & (g > 110))
-    shadow = (g >= 30) & (g > r + 12) & (g > b + 12) & (g < bg[1] + 12) & (d < 125)
+    bglike = (d < 34) if TIGHT else ((d < 48) | ((g > r + 45) & (g > b + 45) & (g > 110)))
+    shadow = (g >= 30) & (g > r + 12) & (g > b + 12) & (g < bg[1] + 12) & (d < (75 if TIGHT else 125))
+    if TIGHT:
+        # green character on a green backdrop: the dark line art is the wall the backdrop may not cross
+        lum = r * .3 + g * .59 + b * .11
+        wall = ndi.binary_dilation(lum < 95, iterations=3)
+        lab, n = ndi.label((bglike | shadow) & ~wall)
+        border = set(np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))) - {0}
+        bgm = np.isin(lab, list(border))
+        grow = ndi.binary_dilation(bgm, iterations=4) & (bglike | shadow)
+        bgm = bgm | grow
+        fg = ~bgm
+        fl, fn = ndi.label(fg)
+        if fn:
+            sizes = ndi.sum(fg, fl, range(1, fn + 1))
+            keep = np.zeros(fn + 1, bool)
+            keep[1:] = sizes > 250
+            fg = keep[fl]
+        return ndi.binary_fill_holes(fg), bg
     lab, n = ndi.label(bglike | shadow)
     border = set(np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))) - {0}
     fg = ~np.isin(lab, list(border))
@@ -29,7 +49,7 @@ def key_mask(a):
         keep[1:] = sizes > 250
         fg = keep[fl]
     # enclosed gaps (between an arm and the body, between hair strands) that are the flat backdrop colour are background too
-    strict = ((d < 30) | ((d < 60) & (g > np.maximum(r, b) + 40)) | ((g > r + 45) & (g > b + 45) & (g > 110))) & fg
+    strict = np.zeros_like(fg) if TIGHT else ((((d < 30) | ((d < 60) & (g > np.maximum(r, b) + 40))) if TIGHT else ((d < 30) | ((d < 60) & (g > np.maximum(r, b) + 40)) | ((g > r + 45) & (g > b + 45) & (g > 110)))) & fg)
     hl, hn = ndi.label(strict)
     if hn:
         hs = ndi.sum(strict, hl, range(1, hn + 1))
@@ -104,10 +124,13 @@ def main():
     ap.add_argument('ident', help='one id for a 2x2 sheet, or comma-separated ids, one per row of a Nx4 sheet')
     ap.add_argument('--mirror', default='', help='"all", or comma-separated ids to mirror')
     ap.add_argument('--sc', type=float, default=1.0)
+    ap.add_argument('--tight', action='store_true', help='green characters: key only colours close to the backdrop')
     ap.add_argument('--flip', default='', help='comma-separated panels to mirror, e.g. idle,blk,por (after --mirror)')
     o = ap.parse_args()
     ids = o.ident.split(',')
     flips = set(x for x in o.flip.split(',') if x)
+    global TIGHT
+    TIGHT = o.tight
     mir = set(ids) if o.mirror == 'all' else set(x for x in o.mirror.split(',') if x)
     a = np.asarray(Image.open(o.sheet).convert('RGB')).astype(np.float32)
     H, W, _ = a.shape
@@ -115,7 +138,7 @@ def main():
     out = a.copy()
     band = fg & ~ndi.binary_erosion(fg, iterations=7)
     mx = np.maximum(out[..., 0], out[..., 2])
-    spill = band & (out[..., 1] > mx + 6)
+    spill = band & (out[..., 1] > mx + 6) & (not TIGHT)
     out[..., 1][spill] = mx[spill] + (out[..., 1][spill] - mx[spill]) * 0.12
     rgba = np.dstack([np.clip(out, 0, 255), fg * 255.0]).astype(np.uint8)
     man_path = os.path.join(HERE, 'manifest.json')
