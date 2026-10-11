@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://galscher.github.io/bushido/sitemap.xml
