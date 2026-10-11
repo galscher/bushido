@@ -1,0 +1,4 @@
+/* ================= 時代 keeping history in order: people only appear in the years they actually lived and served ================= */
+const ENC_YR={hanbei:[1560,1579],sokyu:[1550,1593],magoichi:[1565,1590],frois:[1563,1597],rikyu:[1560,1591],kanbei:[1567,1604],okuni:[1600,1700],dosan:[1545,1594],hanzo:[1560,1596],sakihisa:[1555,1612],tsuruhime:[1530,1545],tenkai:[1580,1700],wangzhi:[1540,1559],joao:[1577,1610],chaya:[1570,1700],chiyome:[1561,1590],raiken:[1460,1585],ryoi:[1600,1700],sansa:[1578,1700],masanobu:[1563,1616],mitsunari:[1580,1600],kanemi:[1560,1610],matauemon:[1565,1582]};
+const encInYear=e=>{const w=ENC_YR[e.id];if(!w)return true;const y=tYear();return y>=w[0]&&y<=w[1]};
+{const o=pickEnc;pickEnc=function(){const keep=ENC.slice();try{const live=ENC.filter(encInYear);ENC.length=0;ENC.push(...live);return o.apply(this,arguments)}catch(e){return null}finally{ENC.length=0;ENC.push(...keep)}}}

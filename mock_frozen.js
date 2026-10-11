@@ -1,0 +1,8 @@
+(()=>{const RO=location.hash.includes('ro');const store={};const ser=x=>JSON.parse(JSON.stringify(x));
+const docRef=(col,id)=>({id,get:async()=>{const v=store[col]&&store[col][id];return{exists:!!v,id,data:()=>v?ser(v):undefined}},set:async d=>{if(RO&&!col.startsWith('data/users/'+'zz'))throw Object.assign(new Error('denied'),{code:'invalid_argument'});(store[col]=store[col]||{})[id]=ser(d)},update:async d=>{if(RO)throw Object.assign(new Error('denied'),{code:'invalid_argument'});store[col][id]={...store[col][id],...ser(d)}}});
+const q=(col,ob,lim)=>({orderBy:(f,dir)=>q(col,[f,dir],lim),limit:n=>q(col,ob,n),get:async()=>{let rows=Object.entries(store[col]||{}).map(([id,v])=>({id,data:()=>ser(v)}));if(ob)rows.sort((a,b)=>(b.data()[ob[0]]||0)-(a.data()[ob[0]]||0));if(lim)rows=rows.slice(0,lim);return{docs:rows}}});
+store.live={other1:{name:'Yoni',h:3,lv:14,wins:22,champs:2,prov:1,best:14,ach:6,dd:(()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`})(),dt:17,dhp:44,ts:Date.now()},other2:{name:'Avi',h:5,lv:3,wins:2,champs:0,prov:0,best:3,ach:1,dd:'2020-01-01',dt:9,dhp:10,ts:1}};
+store.speed={other1:{name:'Yoni',hero:'Benkei',ms:3725000,lvl:41,ts:1},me123:{name:'Dani',hero:'מוסאשי',ms:5400000,lvl:50,ts:2}};window.__store=store;
+const F=o=>Object.freeze(o);const db=F({collection:c=>F({doc:id=>F(docRef(c,id)),...q(c)}),doc:p=>{const i=p.lastIndexOf('/');return F(docRef(p.slice(0,i),p.slice(i+1)))}});
+const user={id:async()=>'me123',can:async()=>!RO,isOwner:()=>!RO};
+window.claude={use:async n=>{await new Promise(r=>setTimeout(r,50));return n==='db'?db:n==='user'?user:null}};})();

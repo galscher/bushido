@@ -1,0 +1,6 @@
+r_*.log
+game.html
+game_test.html
+site/out/
+art/_*_preview.png
+__pycache__/

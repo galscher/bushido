@@ -1,0 +1,1 @@
+window.BUSHIDO_FIREBASE={apiKey:"AIzaSyAfV3MTf_mOeS2T7nnf1o3qJnDoIJfaa_o",authDomain:"boshido.firebaseapp.com",projectId:"boshido",storageBucket:"boshido.firebasestorage.app",messagingSenderId:"884250614860",appId:"1:884250614860:web:faeccf4634830e58e468e9"};window.BUSHIDO_ADMIN=[];

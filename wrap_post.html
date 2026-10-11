@@ -1,0 +1,23 @@
+};
+function boot(l){
+ try{localStorage.setItem('bushido-lang',l)}catch(e){}
+ const d=new DOMParser().parseFromString(DOCS[l],'text/html');
+ const de=document.documentElement;de.setAttribute('lang',l);
+ if(d.documentElement.getAttribute('dir'))de.setAttribute('dir',d.documentElement.getAttribute('dir'));else de.removeAttribute('dir');
+ for(const el of document.head.querySelectorAll('title,style'))el.remove();
+ for(const n of [...d.head.childNodes]){if(n.nodeName==='SCRIPT')continue;document.head.appendChild(document.importNode(n,true))}
+ const scripts=[];for(const s of [...d.body.querySelectorAll('script')]){scripts.push(s.textContent);s.remove()}
+ for(const a of [...d.body.attributes])document.body.setAttribute(a.name,a.value);
+ document.body.replaceChildren(...[...d.body.childNodes].map(n=>document.importNode(n,true)));
+ for(const t of scripts){const n=document.createElement('script');n.textContent=t;document.body.appendChild(n)}
+
+ const CR={he:['© 2026 Bushido Dojo. כל הזכויות שמורות.','Bushido Dojo הוא שם העט של יוצר המשחק, שהוא בעל כל זכויות היוצרים. מזהה בעלות (SHA-256): 48697646886a6e83174a1a25608802614d49b9aa5bffa54222e6bb252f1e82c0. אין להעתיק, לשכפל, להפיץ, לשנות, לתרגם או לעשות כל שימוש מסחרי במשחק "בושידו" – לרבות הקוד, הגרפיקה, הדמויות, השם והתכנים – כולו או חלקו, ללא אישור מראש ובכתב מבעל הזכויות.','rtl'],en:['© 2026 Bushido Dojo. All rights reserved.','Bushido Dojo is the pen name of the game\u2019s creator, who owns all copyright. Ownership ID (SHA-256): 48697646886a6e83174a1a25608802614d49b9aa5bffa54222e6bb252f1e82c0. No part of the game "Bushido" – including its code, artwork, characters, name and text – may be copied, reproduced, distributed, modified, translated or used commercially, in whole or in part, without prior written permission from the copyright holder.','ltr']}[l];if(!document.getElementById('cr-style'))document.head.insertAdjacentHTML('beforeend','<style id="cr-style">.cr-note{margin:18px auto 4px;max-width:420px;padding:12px 14px;border:1px solid #a8792a;border-radius:8px;background:rgba(0,0,0,.35);text-align:center;font:12px/1.55 system-ui,-apple-system,sans-serif;color:#c9b894}.cr-note b{display:block;color:#e6b450;font-size:13px;letter-spacing:.3px;margin-bottom:4px}</style>');const tw=document.querySelector('.title-wrap');if(tw&&!tw.querySelector('.cr-note')){const c=document.createElement('div');c.className='cr-note';c.dir=CR[2];const b=document.createElement('b');b.textContent=CR[0];c.append(b,document.createTextNode(CR[1]));if(window.BushidoLegal){c.append(document.createElement('br'),window.BushidoLegal.linkBtn(l))}tw.append(c)}
+ if(window.BushidoProfile)window.BushidoProfile.inject(l);
+}
+let l=null;try{l=localStorage.getItem('bushido-lang')}catch(e){}
+if(l==='he'||l==='en'){boot(l);return}
+const lp=document.getElementById('lp');lp.hidden=false;{const n=lp.querySelector('.cr-note');if(n&&window.BushidoLegal){n.append(document.createElement('br'),window.BushidoLegal.linkBtn('he'))}}
+for(const b of lp.querySelectorAll('button'))b.onclick=()=>boot(b.dataset.l);
+const pref=(navigator.language||'').toLowerCase().startsWith('he')?'he':'en';const pb=lp.querySelector('[data-l="'+pref+'"]');if(pb)pb.style.borderWidth='2px';
+})();
+</script></body></html>
