@@ -25,3 +25,9 @@
 ▶ **לשחק עכשיו:** https://galscher.github.io/bushido/
 
 © 2026 Bushido Dojo. כל הזכויות שמורות. All rights reserved.
+
+Bushido Dojo הוא שם העט של יוצר המשחק, שהוא בעל כל זכויות היוצרים. מזהה בעלות (SHA-256): 48697646886a6e83174a1a25608802614d49b9aa5bffa54222e6bb252f1e82c0
+
+Bushido Dojo is the pen name of the game’s creator, who owns all copyright. Ownership ID (SHA-256): 48697646886a6e83174a1a25608802614d49b9aa5bffa54222e6bb252f1e82c0
+
+אין להעתיק, לשכפל, להפיץ או לשנות את המשחק ללא אישור בכתב מבעל הזכויות. No copying, distribution or modification without written permission from the copyright owner.
