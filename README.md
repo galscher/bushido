@@ -6,7 +6,8 @@
 
 ![Bushido](og.png)
 
-- ⚔ **Duels where you have to think.** Clashes, stances (jōdan / chūdan / gedan), reading the enemy, ki strikes, shuriken. Spamming attack loses.
+- ⚔ **Real-time duels.** Joystick and buttons: combos, finishers, parries and counters, rolls, ki waves and beam struggles, bloodlust, with a cinematic camera that follows every blow.
+- 👹 **Bosses that loom.** Wind-ups you have to read, red-glint blows you can only roll away from, posture to break, and a second phase.
 - 🗾 **Conquer Japan.** Provinces, castles, armies, food supplies, levies from the realm. Battles from Okehazama to Sekigahara and the siege of Ōsaka.
 - 家 **A dynasty that outlives you.** Marriage alliances, heirs with inherited traits, adoption, retirement (inkyo), succession quarrels, a drawn family tree. Each ancestor leaves a legacy.
 - 🏆 **A live leaderboard and empire wars.** Challenge the player right above you. Your empire fights for you 24/7, even when you're offline.
@@ -17,7 +18,8 @@
 
 **משחק סמוראים חינמי בדפדפן**, בלי הורדה ובלי הרשמה. אפשר לשחק בו בעברית או באנגלית.
 
-- דו־קרבות שבהם צריך לחשוב.
+- דו־קרבות בזמן אמת: ג׳ויסטיק וכפתורים, קומבו, הדיפות, התגלגלויות וגלי קי.
+- בוסים ענקיים עם שלב שני, שצריך לקרוא את התנופות שלהם.
 - כיבוש יפן של תקופת סנגוקו.
 - שושלת שעוברת מדור לדור.
 - טבלת שיאים חיה ומלחמות אימפריה.
