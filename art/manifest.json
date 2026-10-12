@@ -403,5 +403,464 @@
    "src": "art/shingen_por.webp",
    "keyed": 1
   }
+ },
+ "tsuchigumo": {
+  "idle": {
+   "src": "art/tsuchigumo_idle.webp",
+   "ax": 0.494,
+   "w": 777,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/tsuchigumo_blk.webp",
+   "ax": 0.441,
+   "w": 778,
+   "h": 705,
+   "hs": 1.356
+  },
+  "atk": {
+   "src": "art/tsuchigumo_atk.webp",
+   "ax": 0.451,
+   "w": 862,
+   "h": 558,
+   "hs": 1.073
+  },
+  "por": {
+   "src": "art/tsuchigumo_por.webp",
+   "keyed": 1
+  }
+ },
+ "ushioni": {
+  "idle": {
+   "src": "art/ushioni_idle.webp",
+   "ax": 0.488,
+   "w": 651,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/ushioni_blk.webp",
+   "ax": 0.432,
+   "w": 659,
+   "h": 641,
+   "hs": 1.233
+  },
+  "atk": {
+   "src": "art/ushioni_atk.webp",
+   "ax": 0.408,
+   "w": 794,
+   "h": 464,
+   "hs": 0.892
+  },
+  "por": {
+   "src": "art/ushioni_por.webp",
+   "keyed": 1
+  }
+ },
+ "gasha": {
+  "idle": {
+   "src": "art/gasha_idle.webp",
+   "ax": 0.402,
+   "w": 506,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/gasha_blk.webp",
+   "ax": 0.458,
+   "w": 535,
+   "h": 648,
+   "hs": 1.246
+  },
+  "atk": {
+   "src": "art/gasha_atk.webp",
+   "ax": 0.411,
+   "w": 713,
+   "h": 432,
+   "hs": 0.831
+  },
+  "por": {
+   "src": "art/gasha_por.webp",
+   "keyed": 1
+  }
+ },
+ "nue": {
+  "idle": {
+   "src": "art/nue_idle.webp",
+   "ax": 0.442,
+   "w": 577,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/nue_blk.webp",
+   "ax": 0.428,
+   "w": 529,
+   "h": 597,
+   "hs": 1.148
+  },
+  "atk": {
+   "src": "art/nue_atk.webp",
+   "ax": 0.51,
+   "w": 626,
+   "h": 467,
+   "hs": 0.898
+  },
+  "por": {
+   "src": "art/nue_por.webp",
+   "keyed": 1
+  }
+ },
+ "kamaitachi": {
+  "idle": {
+   "src": "art/kamaitachi_idle.webp",
+   "ax": 0.425,
+   "w": 574,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/kamaitachi_blk.webp",
+   "ax": 0.333,
+   "w": 536,
+   "h": 628,
+   "hs": 1.208
+  },
+  "atk": {
+   "src": "art/kamaitachi_atk.webp",
+   "ax": 0.489,
+   "w": 696,
+   "h": 471,
+   "hs": 0.906
+  },
+  "por": {
+   "src": "art/kamaitachi_por.webp",
+   "keyed": 1
+  }
+ },
+ "omukade": {
+  "idle": {
+   "src": "art/omukade_idle.webp",
+   "ax": 0.485,
+   "w": 950,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/omukade_blk.webp",
+   "ax": 0.458,
+   "w": 819,
+   "h": 806,
+   "hs": 1.55
+  },
+  "atk": {
+   "src": "art/omukade_atk.webp",
+   "ax": 0.513,
+   "w": 973,
+   "h": 418,
+   "hs": 0.804
+  },
+  "por": {
+   "src": "art/omukade_por.webp",
+   "keyed": 1
+  }
+ },
+ "tadakatsu": {
+  "idle": {
+   "src": "art/tadakatsu_idle.webp",
+   "ax": 0.454,
+   "w": 671,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/tadakatsu_blk.webp",
+   "ax": 0.349,
+   "w": 614,
+   "h": 656,
+   "hs": 1.262
+  },
+  "atk": {
+   "src": "art/tadakatsu_atk.webp",
+   "ax": 0.38,
+   "w": 829,
+   "h": 482,
+   "hs": 0.927
+  },
+  "por": {
+   "src": "art/tadakatsu_por.webp",
+   "keyed": 1
+  }
+ },
+ "yoshitsune": {
+  "idle": {
+   "src": "art/yoshitsune_idle.webp",
+   "ax": 0.318,
+   "w": 666,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/yoshitsune_blk.webp",
+   "ax": 0.518,
+   "w": 479,
+   "h": 618,
+   "hs": 1.188
+  },
+  "atk": {
+   "src": "art/yoshitsune_atk.webp",
+   "ax": 0.384,
+   "w": 854,
+   "h": 489,
+   "hs": 0.94
+  },
+  "por": {
+   "src": "art/yoshitsune_por.webp",
+   "keyed": 1
+  }
+ },
+ "yukimura": {
+  "idle": {
+   "src": "art/yukimura_idle.webp",
+   "ax": 0.505,
+   "w": 669,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/yukimura_blk.webp",
+   "ax": 0.372,
+   "w": 592,
+   "h": 651,
+   "hs": 1.252
+  },
+  "atk": {
+   "src": "art/yukimura_atk.webp",
+   "ax": 0.408,
+   "w": 847,
+   "h": 481,
+   "hs": 0.925
+  },
+  "por": {
+   "src": "art/yukimura_por.webp",
+   "keyed": 1
+  }
+ },
+ "tomoe": {
+  "idle": {
+   "src": "art/tomoe_idle.webp",
+   "ax": 0.295,
+   "w": 722,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/tomoe_blk.webp",
+   "ax": 0.287,
+   "w": 655,
+   "h": 616,
+   "hs": 1.185
+  },
+  "atk": {
+   "src": "art/tomoe_atk.webp",
+   "ax": 0.404,
+   "w": 782,
+   "h": 447,
+   "hs": 0.86
+  },
+  "por": {
+   "src": "art/tomoe_por.webp",
+   "keyed": 1
+  }
+ },
+ "benkei": {
+  "idle": {
+   "src": "art/benkei_idle.webp",
+   "ax": 0.305,
+   "w": 671,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/benkei_blk.webp",
+   "ax": 0.282,
+   "w": 687,
+   "h": 570,
+   "hs": 1.096
+  },
+  "atk": {
+   "src": "art/benkei_atk.webp",
+   "ax": 0.413,
+   "w": 766,
+   "h": 461,
+   "hs": 0.887
+  },
+  "por": {
+   "src": "art/benkei_por.webp",
+   "keyed": 1
+  }
+ },
+ "masamune": {
+  "idle": {
+   "src": "art/masamune_idle.webp",
+   "ax": 0.359,
+   "w": 604,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/masamune_blk.webp",
+   "ax": 0.36,
+   "w": 541,
+   "h": 552,
+   "hs": 1.062
+  },
+  "atk": {
+   "src": "art/masamune_atk.webp",
+   "ax": 0.348,
+   "w": 768,
+   "h": 441,
+   "hs": 0.848
+  },
+  "por": {
+   "src": "art/masamune_por.webp",
+   "keyed": 1
+  }
+ },
+ "oni_blue": {
+  "idle": {
+   "src": "art/oni_blue_idle.webp",
+   "ax": 0.4,
+   "w": 612,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/oni_blue_blk.webp",
+   "ax": 0.5,
+   "w": 456,
+   "h": 600,
+   "hs": 1.154
+  },
+  "atk": {
+   "src": "art/oni_blue_atk.webp",
+   "ax": 0.457,
+   "w": 757,
+   "h": 454,
+   "hs": 0.873
+  },
+  "por": {
+   "src": "art/oni_blue_por.webp",
+   "keyed": 1
+  }
+ },
+ "shuten": {
+  "idle": {
+   "src": "art/shuten_idle.webp",
+   "ax": 0.457,
+   "w": 560,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/shuten_blk.webp",
+   "ax": 0.44,
+   "w": 485,
+   "h": 551,
+   "hs": 1.06
+  },
+  "atk": {
+   "src": "art/shuten_atk.webp",
+   "ax": 0.529,
+   "w": 693,
+   "h": 495,
+   "hs": 0.952
+  },
+  "por": {
+   "src": "art/shuten_por.webp",
+   "keyed": 1
+  }
+ },
+ "kojiro": {
+  "idle": {
+   "src": "art/kojiro_idle.webp",
+   "ax": 0.322,
+   "w": 739,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/kojiro_blk.webp",
+   "ax": 0.418,
+   "w": 641,
+   "h": 615,
+   "hs": 1.183
+  },
+  "atk": {
+   "src": "art/kojiro_atk.webp",
+   "ax": 0.417,
+   "w": 856,
+   "h": 471,
+   "hs": 0.906
+  },
+  "por": {
+   "src": "art/kojiro_por.webp",
+   "keyed": 1
+  }
+ },
+ "tamamo": {
+  "idle": {
+   "src": "art/tamamo_idle.webp",
+   "ax": 0.52,
+   "w": 633,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/tamamo_blk.webp",
+   "ax": 0.483,
+   "w": 658,
+   "h": 568,
+   "hs": 1.092
+  },
+  "atk": {
+   "src": "art/tamamo_atk.webp",
+   "ax": 0.496,
+   "w": 761,
+   "h": 510,
+   "hs": 0.981
+  },
+  "por": {
+   "src": "art/tamamo_por.webp",
+   "keyed": 1
+  }
+ },
+ "orochi": {
+  "idle": {
+   "src": "art/orochi_idle.webp",
+   "ax": 0.466,
+   "w": 681,
+   "h": 520,
+   "hs": 1.0
+  },
+  "blk": {
+   "src": "art/orochi_blk.webp",
+   "ax": 0.436,
+   "w": 658,
+   "h": 504,
+   "hs": 0.969
+  },
+  "atk": {
+   "src": "art/orochi_atk.webp",
+   "ax": 0.476,
+   "w": 757,
+   "h": 466,
+   "hs": 0.896
+  },
+  "por": {
+   "src": "art/orochi_por.webp",
+   "keyed": 1
+  }
  }
 }

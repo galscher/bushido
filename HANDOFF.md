@@ -56,6 +56,16 @@ Python 3 with Pillow, numpy, scipy and Playwright (Chromium is preinstalled in C
 - Tests: `t24.py he|en` (all four battle types, touch, auto, retreat), `vis24.py he|en [city|sea] [desk]`
   (screenshots), `sim24.py N` (AI against AI balance).
 
+## Illustrated items (`items_addon.js`, `itemsx_addon.js`)
+- Item pictures are `art/i_<key>.webp`, listed in `art/items.json` → `ITEM_DATA` (by `art/mkdata.py`). A 2x2 sheet of four
+  different items is cut by `python3 -I art/mkgroup.py SHEET a,b,c,d [--tight]` (top-left, top-right, bottom-left, bottom-right).
+- Where each one shows: `b_*` companion beasts, `h_*` horses (by tier), `w_*` / `a_*` / `k_*` forged gear in the armory
+  (`k_jingasa` for common helmets, `w_jumonji` for fine spears, katana + `w_wakizashi` together for paired swords),
+  `s_*` ships by type on the battlefield (`s_nanban` is the Portuguese carrack at Fukuda Bay and leads nanban trade
+  voyages), `u_*` soldiers on the battlefield and in the war scenes (pikes, archers, teppō, cavalry; the commander with
+  his banner bearer and drummer in the close-up), `u_ninja` over the shadow-war (ninja clans) page.
+- Still drawn by code (no picture yet): samurai, warrior monks, ōzutsu, bow-wielding heroes' weapon.
+
 ## Test, publish, deploy
 1. `./runall.sh` then wait ~10 minutes; every `r_cr_*`, `r_soak_*` log must end in `ERRORS 0`, `r_t2_*` in the exit
    button text, `r_t10` in `after daily exit …`. `r_t24_*` (the battlefield) must end in `ERRORS 0`. (`t15` is obsolete.) A one-off timeout in `t2` under load: rerun it alone.

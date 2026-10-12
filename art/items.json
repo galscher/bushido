@@ -1,0 +1,262 @@
+{
+ "w_katana": {
+  "src": "art/i_w_katana.webp",
+  "w": 360,
+  "h": 50
+ },
+ "w_nodachi": {
+  "src": "art/i_w_nodachi.webp",
+  "w": 360,
+  "h": 41
+ },
+ "w_naginata": {
+  "src": "art/i_w_naginata.webp",
+  "w": 360,
+  "h": 46
+ },
+ "w_yari": {
+  "src": "art/i_w_yari.webp",
+  "w": 360,
+  "h": 24
+ },
+ "w_kanabo": {
+  "src": "art/i_w_kanabo.webp",
+  "w": 360,
+  "h": 98
+ },
+ "w_claw": {
+  "src": "art/i_w_claw.webp",
+  "w": 360,
+  "h": 279
+ },
+ "w_fan": {
+  "src": "art/i_w_fan.webp",
+  "w": 360,
+  "h": 171
+ },
+ "w_bokken": {
+  "src": "art/i_w_bokken.webp",
+  "w": 360,
+  "h": 62
+ },
+ "w_tachi": {
+  "src": "art/i_w_tachi.webp",
+  "w": 360,
+  "h": 59
+ },
+ "w_wakizashi": {
+  "src": "art/i_w_wakizashi.webp",
+  "w": 360,
+  "h": 64
+ },
+ "w_tanto": {
+  "src": "art/i_w_tanto.webp",
+  "w": 360,
+  "h": 83
+ },
+ "w_jumonji": {
+  "src": "art/i_w_jumonji.webp",
+  "w": 360,
+  "h": 117
+ },
+ "h_dosanko": {
+  "src": "art/i_h_dosanko.webp",
+  "w": 360,
+  "h": 275
+ },
+ "h_kiso": {
+  "src": "art/i_h_kiso.webp",
+  "w": 360,
+  "h": 300
+ },
+ "h_war": {
+  "src": "art/i_h_war.webp",
+  "w": 360,
+  "h": 299
+ },
+ "h_white": {
+  "src": "art/i_h_white.webp",
+  "w": 360,
+  "h": 309
+ },
+ "b_hakutaku": {
+  "src": "art/i_b_hakutaku.webp",
+  "w": 360,
+  "h": 304
+ },
+ "b_kirin": {
+  "src": "art/i_b_kirin.webp",
+  "w": 360,
+  "h": 307
+ },
+ "b_hoo": {
+  "src": "art/i_b_hoo.webp",
+  "w": 360,
+  "h": 318
+ },
+ "b_ryu": {
+  "src": "art/i_b_ryu.webp",
+  "w": 360,
+  "h": 301
+ },
+ "b_raiju": {
+  "src": "art/i_b_raiju.webp",
+  "w": 360,
+  "h": 256
+ },
+ "b_koi": {
+  "src": "art/i_b_koi.webp",
+  "w": 360,
+  "h": 257
+ },
+ "b_tsuru": {
+  "src": "art/i_b_tsuru.webp",
+  "w": 360,
+  "h": 324
+ },
+ "b_genbu": {
+  "src": "art/i_b_genbu.webp",
+  "w": 360,
+  "h": 287
+ },
+ "b_kappa": {
+  "src": "art/i_b_kappa.webp",
+  "w": 338,
+  "h": 360
+ },
+ "b_yata": {
+  "src": "art/i_b_yata.webp",
+  "w": 360,
+  "h": 325
+ },
+ "b_okami": {
+  "src": "art/i_b_okami.webp",
+  "w": 360,
+  "h": 252
+ },
+ "b_bakeneko": {
+  "src": "art/i_b_bakeneko.webp",
+  "w": 360,
+  "h": 304
+ },
+ "b_kitsune": {
+  "src": "art/i_b_kitsune.webp",
+  "w": 360,
+  "h": 309
+ },
+ "b_tanuki": {
+  "src": "art/i_b_tanuki.webp",
+  "w": 360,
+  "h": 293
+ },
+ "b_komainu": {
+  "src": "art/i_b_komainu.webp",
+  "w": 360,
+  "h": 349
+ },
+ "b_baku": {
+  "src": "art/i_b_baku.webp",
+  "w": 360,
+  "h": 275
+ },
+ "s_kobaya": {
+  "src": "art/i_s_kobaya.webp",
+  "w": 360,
+  "h": 205
+ },
+ "s_sekibune": {
+  "src": "art/i_s_sekibune.webp",
+  "w": 360,
+  "h": 253
+ },
+ "s_atake": {
+  "src": "art/i_s_atake.webp",
+  "w": 360,
+  "h": 242
+ },
+ "s_nanban": {
+  "src": "art/i_s_nanban.webp",
+  "w": 360,
+  "h": 298
+ },
+ "u_yari": {
+  "src": "art/i_u_yari.webp",
+  "w": 360,
+  "h": 201
+ },
+ "u_yumi": {
+  "src": "art/i_u_yumi.webp",
+  "w": 276,
+  "h": 360
+ },
+ "u_teppo": {
+  "src": "art/i_u_teppo.webp",
+  "w": 360,
+  "h": 217
+ },
+ "u_cav": {
+  "src": "art/i_u_cav.webp",
+  "w": 360,
+  "h": 320
+ },
+ "u_taisho": {
+  "src": "art/i_u_taisho.webp",
+  "w": 360,
+  "h": 343
+ },
+ "u_drum": {
+  "src": "art/i_u_drum.webp",
+  "w": 360,
+  "h": 287
+ },
+ "u_nobori": {
+  "src": "art/i_u_nobori.webp",
+  "w": 198,
+  "h": 360
+ },
+ "u_ninja": {
+  "src": "art/i_u_ninja.webp",
+  "w": 333,
+  "h": 326
+ },
+ "a_light": {
+  "src": "art/i_a_light.webp",
+  "w": 189,
+  "h": 360
+ },
+ "a_tosei": {
+  "src": "art/i_a_tosei.webp",
+  "w": 181,
+  "h": 360
+ },
+ "a_oyoroi": {
+  "src": "art/i_a_oyoroi.webp",
+  "w": 245,
+  "h": 360
+ },
+ "a_black": {
+  "src": "art/i_a_black.webp",
+  "w": 185,
+  "h": 360
+ },
+ "k_crescent": {
+  "src": "art/i_k_crescent.webp",
+  "w": 343,
+  "h": 360
+ },
+ "k_antler": {
+  "src": "art/i_k_antler.webp",
+  "w": 274,
+  "h": 360
+ },
+ "k_kuwagata": {
+  "src": "art/i_k_kuwagata.webp",
+  "w": 291,
+  "h": 360
+ },
+ "k_jingasa": {
+  "src": "art/i_k_jingasa.webp",
+  "w": 360,
+  "h": 284
+ }
+}
