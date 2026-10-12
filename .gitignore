@@ -11,3 +11,14 @@ vis_cv*.png
 s_*.png
 s1*_*.png
 kk_*.png
+_aud*.html
+_audit.html
+live_latest.html
+_sea_t.html
+r2_*.log
+_sn_t.html
+_cs_t.html
+_tour_t.html
+_base_t.html
+r[0-9]_*.log
+sn_*.png

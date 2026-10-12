@@ -453,7 +453,7 @@ async function sjStart(){const ctx=WAR.ctx;try{document.querySelectorAll('#sjOv'
  for(const s of['me','foe']){const h=SJ.hq[s];SJ.units.push(sjMk(s,SJ.sea?'flag':'gen',h[0]+.5,h[1]+.5,100))}
  for(const[x,y]of G.gates)SJ.units.push(sjMk(castleSide,'gate',x+.5,y+.5,100));for(const[x,y]of G.yagura)SJ.units.push(sjMk(castleSide,'yagura',x+.5,y+.5,100));
  SJ.zones=sjMkZones(G);sjAutoDeploy('foe',.78);
- try{S.sjPend={p:String(ctx.place||'').slice(0,40),t:Date.now()};save()}catch(e){}
+ try{S.sjPend={p:String(ctx.place||'').slice(0,40),t:Date.now(),pl:ctx.plot||''};save()}catch(e){}
  sjTerrainCache();sjBuildUI();sjVision();
  SJ.loop=setInterval(sjTick,50);SJ.last=performance.now();sjLoopDraw();
  if(S.autoFight){SJ.auto.me=true;SJ.keiAt.me=25;sjAutoDeploy('me',.85);sjBegin();return}
@@ -706,7 +706,7 @@ body:has(#sjOv) #helpFab,body:has(#sjOv) #quickBar{display:none!important}
 </style>`);
 
 /* a battle abandoned halfway (the page closed or reloaded) counts as a disorderly retreat, so it cannot be dodged and retried */
-setInterval(()=>{try{if(!S||!S.sjPend||SJ||(WAR&&WAR.sj&&!WAR.over))return;const P=S.sjPend;delete S.sjPend;const lost=Math.round((S.est.soldiers||0)*.15);S.est.soldiers=Math.max(0,(S.est.soldiers||0)-lost);S.streak=0;S.est.mor=clamp((S.est.mor||50)-5,0,100);save();
+setInterval(()=>{try{if(!S||!S.sjPend||SJ||(WAR&&WAR.sj&&!WAR.over))return;const P=S.sjPend;delete S.sjPend;const lost=Math.round((S.est.soldiers||0)*.15);S.est.soldiers=Math.max(0,(S.est.soldiers||0)-lost);S.streak=0;S.est.mor=clamp((S.est.mor||50)-5,0,100);try{mercWarEnd();if(P.pl==='coalition'&&S.coal){S.coal.left=0;if(S.clan.cities.length>1)provFall(S.clan.cities[S.clan.cities.length-1],T46('צבא הקואליציה','The coalition army'),coalSize())}}catch(e){}save();
  try{feed(TX(`${P.p}: הצבא עזב את שדה הקרב באמצע · −${lost} חיילים`,`${P.p}: the army left the field mid-battle · −${lost} soldiers`))}catch(e){}toast(TX(`הקרב ב${P.p} ננטש באמצע: נסיגה בלי סדר, ${lost} חיילים אבדו.`,`The battle at ${P.p} was abandoned: a disorderly retreat, ${lost} soldiers lost.`))}catch(e){}},2500);
 /* ---------- the hooks into the old war ---------- */
 /* the core sets the war up; the battle replaces the three rounds as soon as the war screen first settles */

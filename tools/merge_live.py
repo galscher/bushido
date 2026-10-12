@@ -29,7 +29,29 @@ def merge(doc):
       if a>0:doc=doc[:a]+KEK+SEN+doc[a:];break
   assert doc.count(SEN_H)==1 and doc.count(KEK_H)==1
   return doc
-he,en=merge(he),merge(en)
+# blocks this chat keeps at the very end of the addons (replaced if present, else inserted before the debug hooks)
+TAIL=[('artmap_addon.js','/* ================= 絵 the art we already have'),('season_addon.js','/* ================= 場所 the weekly season')]
+def merge_am(doc):
+  for fn,H in TAIL:
+    B=open(fn,encoding='utf8').read()+'\n';assert '</script' not in B
+    a=doc.find(H)
+    if a>=0:
+      e=min([x for x in [doc.find('/* ================= ',a+10),doc.find('if(false)window.__t={get CAMOV()')] if x>a])
+      doc=doc[:a]+doc[e:]
+    m=doc.find('if(false)window.__t={get CAMOV()');doc=doc[:m]+B+doc[m:];assert doc.count(H)==1
+  return doc
+# another chat may have touched one of these blocks on the live page: say so loudly, so it is adopted, never erased
+def drift(doc,lang):
+  for fn,H in [('kekki_addon.js',KEK_H),('senjo_addon.js',SEN_H)]+TAIL:
+    b=block(doc,H) if H in (KEK_H,SEN_H) else None
+    if H not in (KEK_H,SEN_H):
+      a=doc.find(H)
+      if a<0:continue
+      e=min([x for x in [doc.find('/* ================= ',a+10),doc.find('if(false)window.__t={get CAMOV()')] if x>a]);b=(a,e)
+    if not b:continue
+    if doc[b[0]:b[1]].strip()!=open(fn,encoding='utf8').read().strip():print('WARNING: the live',lang,'copy of',fn,'differs from the local file: adopt the live change before merging')
+drift(he,'he');drift(en,'en')
+he,en=merge_am(merge(he)),merge_am(merge(en))
 with tempfile.TemporaryDirectory() as d:
   ph,pe=os.path.join(d,'he.html'),os.path.join(d,'en.html')
   open(ph,'w',encoding='utf8').write(he);open(pe,'w',encoding='utf8').write(en)

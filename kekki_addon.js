@@ -43,4 +43,4 @@ document.head.insertAdjacentHTML('beforeend',`<style>
 #pad .kkb:disabled{opacity:1;cursor:default}#pad .kkb:disabled:not(.on) b{opacity:.75}
 @keyframes kkpulse{from{filter:brightness(1)}to{filter:brightness(1.45)}}
 </style>`);
-if(false)window.__kk={kkGo:f=>kkGo(f),get P(){return P},get E(){return E}};
+if(false)window.__kk={kkGo:f=>kkGo(f),get P(){return P},get E(){return E}};KKX={go:kkGo,b:kkB,cool:kkCool,T:KK_TURNS};

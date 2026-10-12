@@ -37,6 +37,27 @@ Python 3 with Pillow, numpy, scipy and Playwright (Chromium is preinstalled in C
   yoshitsune, yukimura are still drawn by code). Ladder foes by `LADDER_ART` in `art_addon.js`, in ladder order:
   ronin ✔, kappa ✔, ronin2 ✔, tengu ✔, yukionna ✔, jorogumo ✔, kitsune ✔, oni_red (portrait only), guard, kenshin,
   shingen, nobunaga, raijin, fujin, oni_blue, shuten.
+- `artmap_addon.js` (after itemsx) puts art we already have on more faces: saga heroes with their own art (by `sgid`),
+  Tamamo's shadow → kitsune, Ōtakemaru → oni_red, castle guards → guard, market toughs and bounty hunters → ronin/ronin2,
+  the sea Ushi-oni in the sea battle (mirrored, legs under the waves). The great oni get `_sc` 1.08–1.14 (only where the
+  art has none) so they stand a head above a man. Art figures are 190px×scale; drawn figures are the same body height.
+- **Audit:** `python3 -I tools/artaudit.py PAGE.html OUT.json` draws every arena fighter (ladder, hunts, cities, foreign,
+  saga, heroes, bounty, market), prints who has art and the height, and writes `OUT_lineup.png` (green label = art).
+  The page is written beside `art/` (relative art paths) and Chromium runs with file access, or the art won't load.
+- **Still drawn by code — the next sheets to make** (2x2 green screen, facing right, same style as the ladder art):
+  - saga generals: kiyomasa (Katō, tall eboshi helmet, spear), naomasa / naotaka (Ii red armour), yamagata (red, Takeda),
+    baba, kansuke (one-eyed strategist), kakizaki, shibata, mitsuhide / hidemitsu (Akechi, blue), otani (white hood,
+    leper general), ukon (Takayama), yoshimoto (Imagawa, court robe, blackened teeth), ranmaru (young page), shinsuke,
+    kajiwara, akaho (red rider), raider (bandit chief), gonta (gravedigger), junkai (banner monk), gokei (pagoda monk),
+    noshadow (monk), goemon (Ishikawa, thief), foxman (fox mask), kasha (fire cat yokai).
+  - province commanders (azuchi, iga, mikawa, mino, omi, shima, wakasa): two or three generic sheets would cover them
+    (a daimyō lord, a field commander, an archer commander), mapped in `artmap_addon.js` the way guards are.
+  - foreign: Ming general / commander (bunei, imjin, sacheon: one Ming sheet), a Portuguese captain (koan).
+  - hunts: raiju (thunder beast), umibozu (black sea monk).
+  - sea battle (`seaMon`): isonade (hook-finned shark), umibozu, bakekujira (ghost whale skeleton) — one wide sheet each.
+  - advisers (`CAST`, 37 portraits in `drawCast`): only the `por` cell is needed for these.
+- Free sprite packs were checked: the samurai packs online are 64×64 pixel art at another scale and palette, the LPC set
+  is CC-BY-SA/GPL (attribution, share-alike) and top-down; opengameart/itch are not reachable from here. Don't mix them in.
 
 ## The battlefield (戦場, `senjo_addon.js`): real time, in the manner of WARNO
 - Army wars are fought in real time on a 10×8 map (field, siege, sea, board). The core `startWar` still sets the war up
@@ -65,13 +86,37 @@ Python 3 with Pillow, numpy, scipy and Playwright (Chromium is preinstalled in C
 - Hits fill the warrior's cup (pain fills the other's a little); misses, guard and rest cool it. When full, the 血気 button
   under the bushido strike lets loose 修羅 for 3 blows: +35% damage, but no guard, rest, taunt or retreat, and +15% damage
   taken. The foe uses it too (`aiChoose`), and the autopilot lets it loose. Test: `t25.py he|en`.
+- The real-time duel (v62, another chat) reaches it through the bridge on the last line of `kekki_addon.js`:
+  `KKX={go:kkGo,b:kkB,cool:kkCool,T:KK_TURNS}`. Keep that line; in real time 修羅 lasts three strikes.
+
+## The leaderboard: a weekly season (場所, `season_addon.js`)
+- The owner found the career score ("永 never resets") discouraging: a new journey showed the old points and the top was
+  out of reach. The bank underneath is untouched, but what is shown and ranked changed:
+  - the 🏆 pill on top = this journey only (`runNow()`, the first 15 fields of the record), with your place in the season;
+  - 🎌 Season (the default tab) = points earned this week in any journey (`bushido-season`: bank + top − base per journey,
+    so a loss and a recovery never count twice and a restored code counts only what it gains from there). It resets on
+    Sunday (`SN_EP`), with last week's podium, dan ranks 足軽→将軍 (`SN_LG`), "N more points to pass X", and the rows around
+    you when you are below the top 15;
+  - This journey = the current journey of every player; 🏯 Hall of fame = each player's best single journey (`rb/rbc`,
+    or the journey inside an older row's best snapshot).
+- Rows carry `ss, sp` (season), `lss, lsp` (last season), `rb, rbc` (best journey). A season row is believed only if it is a
+  whole number within 4× the player's real best + 60000. The streaming board (`liveOnRows`) keeps working; the place and
+  the "passed you" news follow the season. Test: `t26.py he|en [page]` (in `runall.sh`).
+
+## Faces and pictures that were still drawn by code (`artmap_addon.js`)
+- The court and market portraits (`drawCast`) of people who have art: Nobunaga, Yukimura, Gonbei → guard, Kumagoro →
+  ronin2, Ryūzan → ronin (the same faces they have in the arena), over their own scene, at 3× resolution.
+- The duel picker and the daily-challenge foe (`x50h<i>` / `x50f<idx>` keys) use the warrior/ladder portraits, preloaded.
+- The smithy: every blade grade, armour and horse card gets its picture in a lacquer frame coloured by grade; cards are
+  matched by name, so the shop's own filtering and order don't matter. The foal of your stable is the pony, brighter.
 
 ## No firearms (house rule)
 - The owner wants no guns or cannons anywhere in the game. `tools/nogun.py` rewrites every story line and text that had
   them (Tanegashima becomes the foreign steel 南蛮鉄, Nagashino the palisade of archers and long pikes, the ōzutsu tech the
   seirō siege towers, the sea-monster cannons heavy stones). Run it after merging other work, and never add new ones.
-- `tools/merge_live.py LIVE OUT` puts this chat's two addons and the no-firearms texts onto a live version without touching
-  anything else in it.
+- `tools/merge_live.py LIVE OUT` puts this chat's addons (kekki, senjo, artmap, season) and the no-firearms texts onto a
+  live version without touching anything else in it. It prints `WARNING ... differs` when another chat changed one of
+  these blocks on the live page: copy the live block into the local file first, then merge (never erase their change).
 
 ## Illustrated items (`items_addon.js`, `itemsx_addon.js`)
 - Item pictures are `art/i_<key>.webp`, listed in `art/items.json` → `ITEM_DATA` (by `art/mkdata.py`). A 2x2 sheet of four
@@ -85,7 +130,7 @@ Python 3 with Pillow, numpy, scipy and Playwright (Chromium is preinstalled in C
 
 ## Test, publish, deploy
 1. `./runall.sh` then wait ~10 minutes; every `r_cr_*`, `r_soak_*` log must end in `ERRORS 0`, `r_t2_*` in the exit
-   button text, `r_t10` in `after daily exit …`. `r_t24_*` (the battlefield) and `r_t25_*` (bloodlust in the duel) must end in `ERRORS 0`. (`t15` is obsolete.) A one-off timeout in `t2` under load: rerun it alone.
+   button text, `r_t10` in `after daily exit …`. `r_t24_*` (the battlefield), `r_t25_*` (bloodlust in the duel) and `r_t26_*` (the season board) must end in `ERRORS 0`. (`t15` is obsolete.) A one-off timeout in `t2` under load: rerun it alone.
 2. Anti-cheat: `t21.py` (tampered save writes nothing to the board), `t22.py` (no planted handles, forged restore is
    flagged), `t23.py` (forged daily records refused). No `?dbg`, `window.__` handles or kill switches in `game.html`.
 3. Publish the artifact (read it first and merge if someone else published a newer version), passing every new
