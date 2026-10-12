@@ -38,23 +38,40 @@ Python 3 with Pillow, numpy, scipy and Playwright (Chromium is preinstalled in C
   ronin ✔, kappa ✔, ronin2 ✔, tengu ✔, yukionna ✔, jorogumo ✔, kitsune ✔, oni_red (portrait only), guard, kenshin,
   shingen, nobunaga, raijin, fujin, oni_blue, shuten.
 
-## The battlefield (戦場, `senjo_addon.js`)
-- Army wars are a turn-based tactics battle on a 10×8 map of squares (in the manner of Advance Wars). The core `startWar`
-  still sets the war up (doctrines, fleet, kami wind, mercenaries, walls, logistics, `WAR.my/foe.max`); the addon takes
-  over at the first `refreshWar` (`WAR.sj=1`), blocks `warRound`/`autoWar`, and hands the result back through `warEnd`
-  by writing `WAR.my.cur`, `WAR.foe.cur`, `WAR.kills`, `WAR.round`. Retreat calls `warEnd(false,{retreat:1})`.
-- Maps: field (paddies, forest, hills, river with bridges and fords, villages, HQ), siege (moat, stone walls, two gates,
-  yagura towers, keep; mirrored when you defend), sea (shoals, reefs, islands), board (field + the rival's castle).
-- Units (`SJU`) and the damage table (`SJB`, AW-style percent at full strength): ashigaru pikes, archers, teppō
-  (from 1543, needs guns), cavalry, samurai, warrior monks, ōzutsu (from 1576 + the `ozutsu` tech), the commander
-  (将, his fall ends the battle); ships atakebune / sekibune / kobaya / flagship; gates and yagura as structures.
-- Power decides numbers: `sjBudget(WAR.my.max, WAR.foe.max)` gives each side 2–10 units of strength 1–10.
-- Commanders (`SJCO`): the player's hero, the foe's doctrine (or the board rival's hero), a meter that fills from
-  damage dealt and taken. The board rival plays by `emp.wr` in his live row (army mix and aggression, clamped on read).
-- Eight days at most; then the higher remaining percentage wins, and a tie goes to the defender.
-- A battle left halfway (page closed) is settled as a disorderly retreat (`S.sjPend`), so it cannot be retried.
-- Tests: `t24.py he|en` (all four battle types, touch, auto, retreat), `vis24.py he|en [city|sea] [desk]`
-  (screenshots), `sim24.py N` (AI against AI balance).
+## The battlefield (戦場, `senjo_addon.js`): real time, in the manner of WARNO
+- Army wars are fought in real time on a 10×8 map (field, siege, sea, board). The core `startWar` still sets the war up
+  (doctrines, fleet, kami wind, mercenaries, walls, logistics, `WAR.my/foe.max`); the addon takes over at the first
+  `refreshWar` (`WAR.sj=1`), and hands the result back through `warEnd` (`WAR.my.cur`, `WAR.foe.cur`, `WAR.kills`).
+- 布陣 deployment: army power → points (`sjBudget`); unit cards with costs and limits (`SJ_COST`, `sjMkCards`); what is not
+  deployed stays in reserve and can be called mid-battle (arrives at the HQ after 6 s). Formation (陣形, `SJ_FORM`, the eight
+  classic ones) and one stratagem (計略, `SJ_KEI`: night raid, fire attack, ambush, false report) are chosen here.
+- Troops (`SJU`, `SJB`, `SJ_RT`), **no firearms anywhere**: ashigaru pikes, archers, stone throwers, cavalry, horse archers,
+  samurai, warrior monks, shinobi (stealth scouts), 母衣衆 command riders, 掛矢 gate breakers, 荷駄 supply train; ships
+  atakebune / sekibune / kobaya / flagship; gates and yagura.
+- Fog of war (`sjVision`), stress and morale (動揺 suppressed, 敗走 routing, the commander's aura rallies), limited arrows
+  refilled at the supply train or the HQ, flag zones taken only by command riders or the commander (at sea, any ship),
+  first to 120 points wins; also the commander's fall or a broken army. Siege: break a gate, take the keep; the defender
+  wins on time.
+- Everything the realm built counts (`sjMods`): arms, armour, retainers, stables, horses, spies, walls, rice, research,
+  morale, training, the hero's stats, night, weather, doctrines, luck; the player sees the list in the deploy screen.
+- Commanders (`SJCO`) fill a meter from damage dealt and taken; a power lasts 20 s and steadies every unit.
+- Auto mode (`S.autoFight`) runs the battle in fast simulation (a few seconds). A battle left halfway counts as a
+  disorderly retreat (`S.sjPend`). The board rival plays by `emp.wr` in his live row (clamped on read).
+- The art chat's `itemsx_addon.js` wraps `sjDrawUnit` and `twMan` for the illustrated soldiers and ships: keep those names.
+- Tests: `t24.py he|en` (deploy, touch orders, pause, power, stratagem, all four battle types, auto, retreat),
+  `sim24.py N [field|siege|sea|rank]` (AI against AI balance).
+
+## Bloodlust (血気, `kekki_addon.js`): in the duel only
+- Hits fill the warrior's cup (pain fills the other's a little); misses, guard and rest cool it. When full, the 血気 button
+  under the bushido strike lets loose 修羅 for 3 blows: +35% damage, but no guard, rest, taunt or retreat, and +15% damage
+  taken. The foe uses it too (`aiChoose`), and the autopilot lets it loose. Test: `t25.py he|en`.
+
+## No firearms (house rule)
+- The owner wants no guns or cannons anywhere in the game. `tools/nogun.py` rewrites every story line and text that had
+  them (Tanegashima becomes the foreign steel 南蛮鉄, Nagashino the palisade of archers and long pikes, the ōzutsu tech the
+  seirō siege towers, the sea-monster cannons heavy stones). Run it after merging other work, and never add new ones.
+- `tools/merge_live.py LIVE OUT` puts this chat's two addons and the no-firearms texts onto a live version without touching
+  anything else in it.
 
 ## Illustrated items (`items_addon.js`, `itemsx_addon.js`)
 - Item pictures are `art/i_<key>.webp`, listed in `art/items.json` → `ITEM_DATA` (by `art/mkdata.py`). A 2x2 sheet of four
@@ -68,7 +85,7 @@ Python 3 with Pillow, numpy, scipy and Playwright (Chromium is preinstalled in C
 
 ## Test, publish, deploy
 1. `./runall.sh` then wait ~10 minutes; every `r_cr_*`, `r_soak_*` log must end in `ERRORS 0`, `r_t2_*` in the exit
-   button text, `r_t10` in `after daily exit …`. `r_t24_*` (the battlefield) must end in `ERRORS 0`. (`t15` is obsolete.) A one-off timeout in `t2` under load: rerun it alone.
+   button text, `r_t10` in `after daily exit …`. `r_t24_*` (the battlefield) and `r_t25_*` (bloodlust in the duel) must end in `ERRORS 0`. (`t15` is obsolete.) A one-off timeout in `t2` under load: rerun it alone.
 2. Anti-cheat: `t21.py` (tampered save writes nothing to the board), `t22.py` (no planted handles, forged restore is
    flagged), `t23.py` (forged daily records refused). No `?dbg`, `window.__` handles or kill switches in `game.html`.
 3. Publish the artifact (read it first and merge if someone else published a newer version), passing every new

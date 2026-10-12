@@ -1,4 +1,5 @@
-# Tactical battle (戦場) test: field, siege, sea and board battles; manual play, auto play, retreat. Usage: python3 t24.py he|en
+# Real-time battlefield (戦場) test: deploy, formations and stratagems, orders by touch, field/siege/sea/board battles,
+# auto mode, retreat, zones, bloodlust. Usage: python3 t24.py he|en
 import asyncio,sys
 from playwright.async_api import async_playwright
 LANG=sys.argv[1] if len(sys.argv)>1 else 'he'
@@ -13,98 +14,88 @@ async def main():
         pg.on('console',lambda m:errs.append(m.type+' '+m.text[:300]) if m.type in('error','warning') and 'ERR_TUNNEL' not in m.text and 'Failed to load resource' not in m.text else None)
         await pg.goto('file:///home/claude/bushido/game_test.html?dbg=1'); await pg.wait_for_timeout(1500)
         E=pg.evaluate
-        async def clear(n=12):
-            for _ in range(n):
-                o=await E("()=>{const ov=document.querySelector('#overlay');const xs=[...document.querySelectorAll('.x50ov,.v40ov,#march,#intro,.clipov')];if(ov&&!ov.hidden){const bs=[...ov.querySelectorAll('button')].filter(b=>b.offsetParent&&!b.disabled);const fc=bs.filter(b=>b.classList.contains('fcard'));if(fc.length&&!document.querySelector('.fcard.picked')){fc[0].click();return 'card'}const nb=bs.filter(b=>!b.classList.contains('fcard')&&!b.classList.contains('ovx'));const ch=nb.filter(b=>b.classList.contains('choice'));const pick=ch[0]||nb[nb.length-1];if(pick){pick.click();return 'ov'}}for(const x of xs){const c=x.querySelector('.bar .btn')||x.querySelector('button');if(c){c.click();return 'x'}x.click();return 'xc'}return null}")
-                if not o: return
-                await pg.wait_for_timeout(500)
-        await E("()=>document.querySelector('#btnNew').click()"); await pg.wait_for_timeout(1200)
-        for i in range(30):
+        CL="()=>{const s=document.querySelector('#selGo');if(s&&s.offsetParent)s.click();const ov=document.querySelector('#overlay');if(ov&&!ov.hidden){const b=[...ov.querySelectorAll('button')].filter(b=>b.offsetParent&&!b.disabled);const fc=b.filter(x=>x.classList.contains('fcard'));if(fc.length&&!document.querySelector('.fcard.picked')){fc[0].click();return 1}(b.find(x=>x.classList.contains('choice'))||b[b.length-1])?.click();return 1}for(const x of document.querySelectorAll('.x50ov,.v40ov,#march,#intro,.clipov')){(x.querySelector('button')||x).click();return 1}return 0}"
+        await E("()=>document.querySelector('#btnNew').click()"); await pg.wait_for_timeout(1000)
+        for i in range(40):
+            await E(CL); await pg.wait_for_timeout(400)
             v=await E("()=>[...document.querySelectorAll('.screen')].filter(s=>!s.hidden).map(s=>s.id)")
-            if v==['scr-select']: await E("()=>document.querySelector('#selGo').click()")
-            await clear(); await pg.wait_for_timeout(500)
-            v=await E("()=>[...document.querySelectorAll('.screen')].filter(s=>!s.hidden).map(s=>s.id)")
-            if v==['scr-hub']: break
+            if v==['scr-hub'] and i>6: break
         print('hub reached',v)
-        await E("()=>{const S=window.__v31.S;S.est.soldiers=400;S.arm.yumi=2;S.arm.yari=2;S.arm.gun=1;S.clan.day=80;S.gold+=5000}")
-        await E("()=>{window.__base=JSON.stringify(window.__v31.S)}")
+        await E("()=>{const S=window.__v31.S;S.est.soldiers=400;S.arm.yumi=2;S.arm.yari=2;S.clan.day=80;S.gold+=5000;S.est.b.stables=2;S.def=S.def||{};S.def.spies=1;window.__base=JSON.stringify(S)}")
         async def war(kind,auto=False):
             await E("()=>{const S=window.__v31.S,B=JSON.parse(window.__base);const keep=S.seenHelp;for(const k of Object.keys(S))if(!(k in B))delete S[k];Object.assign(S,B);S.seenHelp=keep||S.seenHelp;try{window.__v31.renderHub()}catch(e){}}")
-            if auto: await E("()=>{window.__v31.S.autoFight=true}")
-            js="""(k)=>{const T=window.__t,H=window.__sj,cityFoe=H.cityFoe,navyPower=H.navyPower,armyPower=H.armyPower,rkFoe=H.rkFoe;const c=T.CITIES[3];let ctx;
-             if(k==='sea')ctx={kind:'trade',id:c.id,fd:cityFoe(c),def:Math.round(navyPower()*1.1+60),naval:1,place:'X',banner:'sea'};
-             else if(k==='def')ctx={kind:'foreign',id:'mongol',mongol:1,fd:cityFoe(c),def:Math.round(armyPower()*1.1),place:'Y',banner:'def'};
-             else if(k==='rank')ctx={kind:'rank',def:Math.round(armyPower()),fd:rkFoe({id:'zz',name:'Tester',hp:100,emp:{ap:300,gm:1.1,lv:8,hero:2,wr:{yari:3,kiba:4,teppo:'x',ag:0.9}}}),rkT:{id:'zz',name:'Tester',hp:100,gain:5},place:'Z',banner:'rank'};
-             else ctx={kind:'city',id:c.id,fd:cityFoe(c),def:Math.round(armyPower()*1.05),place:c.castle,banner:'city'};
+            await E("(a)=>{window.__v31.S.autoFight=a}",auto)
+            js="""(k)=>{const T=window.__t,H=window.__sj;const c=T.CITIES[3];let ctx;
+             if(k==='sea')ctx={kind:'trade',id:c.id,fd:H.cityFoe(c),def:Math.round(H.navyPower()*1.1+60),naval:1,place:'X',banner:'sea'};
+             else if(k==='def')ctx={kind:'foreign',id:'mongol',mongol:1,fd:H.cityFoe(c),def:Math.round(H.armyPower()*1.1),place:'Y',banner:'def'};
+             else if(k==='rank')ctx={kind:'rank',def:Math.round(H.armyPower()),fd:H.rkFoe({id:'zz',name:'Tester',hp:100,emp:{ap:300,gm:1.1,lv:8,hero:2,wr:{yari:3,kiba:4,teppo:'x',kisha:2,ag:0.9}}}),rkT:{id:'zz',name:'Tester',hp:100,gain:5},place:'Z',banner:'rank'};
+             else ctx={kind:'city',id:c.id,fd:H.cityFoe(c),def:Math.round(H.armyPower()*1.05),place:c.castle,banner:'city',sgStorm:1};
              T.startFight(ctx);return ctx.kind}"""
             await E(js,kind)
-            for _ in range(20):
+            for _ in range(30):
                 await pg.wait_for_timeout(400)
                 if await E("()=>!!document.querySelector('#sjOv')"): break
-                await clear(1)
-            st=await E("()=>{const J=window.__sj.SJ;if(!J)return null;return {kind:J.kind,me:J.units.filter(u=>u.side==='me').map(u=>u.t+u.hp).join(','),foe:J.units.filter(u=>u.side==='foe').map(u=>u.t+u.hp).join(','),start:J.start,keep:J.keepSide,co:J.co}}")
-            for _ in range(20):
-                if await E("()=>!!document.querySelector('#sjHelpOv')||!!(window.__sj.SJ&&window.__sj.SJ.turn)"): break
-                await pg.wait_for_timeout(250)
+                await E(CL)
+            await pg.wait_for_timeout(500)
             if await E("()=>!!document.querySelector('#sjHelpOv')"):
-                print('help shown'); await pg.wait_for_timeout(300); await pg.screenshot(path=f'sj_{LANG}_help0.png'); await E("()=>document.querySelector('#sjHelpX').click()")
-            await pg.wait_for_timeout(1600)
+                print('help shown'); await pg.screenshot(path=f'sj_{LANG}_help0.png'); await E("()=>document.querySelector('#sjHelpX').click()")
+            st=await E("()=>{const J=window.__sj.SJ;if(!J)return null;return {kind:J.kind,phase:J.phase,budget:J.budget,cards:J.cards.me.map(c=>c.t+':'+c.max).join(','),foe:J.units.filter(u=>u.side==='foe').map(u=>u.t).join(','),zones:J.zones.length,keep:J.keepSide,form:J.form,kei:J.kei}}")
             print(kind,'battle',st)
             return st
-        # 1) field/siege: manual moves, then auto to finish
+        async def finish(n=240):
+            for _ in range(n):
+                await pg.wait_for_timeout(500)
+                if not await E("()=>!!document.querySelector('#sjOv')"): break
+            await E(CL); await pg.wait_for_timeout(600)
+            for _ in range(10): await E(CL); await pg.wait_for_timeout(300)
+            print('  result',await E("()=>JSON.stringify(window.__sj.last)"))
+        # 1) manual: formation, stratagem, deploy by touch, orders by touch, pause, power, stratagem, then auto to the end
         st=await war('city')
-        await pg.wait_for_timeout(2200)
-        await pg.screenshot(path=f'sj_{LANG}_1.png')
-        # real touch: tap a unit of ours on the canvas, it must become selected; tap it again to wait
+        await E("()=>{window.__sj.sjSetForm('kakuyoku');window.__sj.sjSetKei('fukuhei')}")
         box=await pg.locator('#sjCv').bounding_box()
-        tu=await E("()=>{const J=window.__sj.SJ;const u=J.units.find(u=>u.side==='me'&&!u.gen);return [u.x,u.y]}")
-        await pg.touchscreen.tap(box['x']+(tu[0]+.5)*box['width']/10,box['y']+(tu[1]+.5)*box['height']/8); await pg.wait_for_timeout(300)
-        print('touch select',await E("()=>window.__sj.SJ.st"))
-        await E("()=>{const c=document.querySelector('#sjCan');c&&c.click()}"); await pg.wait_for_timeout(200)
-        print('after cancel',await E("()=>window.__sj.SJ.st"))
-        # select first own non-general unit and tap a reachable tile, then end turn
-        r=await E("""()=>{const J=window.__sj.SJ;const u=J.units.find(u=>u.side==='me'&&!u.gen);window.__sj.sjTap(u.x,u.y);const sel=J.sel;if(!sel)return 'nosel';let best=null;for(const [k,e] of sel.reach){if(e.pass)continue;const x=k%10,y=(k/10)|0;if(!best||x>best[0])best=[x,y]}window.__sj.sjTap(best[0],best[1]);return [u.t,best,J.st]}""")
-        print('move',r); await pg.wait_for_timeout(1500)
-        await pg.screenshot(path=f'sj_{LANG}_2.png')
-        await E("()=>{const J=window.__sj.SJ;if(J.st==='moved'){document.querySelector('#sjAct').click()}}")
-        await E("()=>{window.__sj.sjEndTurn();window.__sj.sjEndTurn()}")
+        tap=lambda x,y: pg.touchscreen.tap(box['x']+x*box['width']/10,box['y']+y*box['height']/8)
+        await E("()=>{const b=[...document.querySelectorAll('#sjCards .sjcardb')].find(b=>!b.disabled);b&&b.click()}"); await pg.wait_for_timeout(200)
+        dz=await E("()=>{const J=window.__sj.SJ;for(const x of [2,1,0])for(const y of [3,4,2,5])if(!J.units.some(u=>Math.floor(u.x)===x&&Math.floor(u.y)===y))return [x,y];return null}")
+        await tap(dz[0]+.5,dz[1]+.5); await pg.wait_for_timeout(300)
+        print('placed by touch',await E("()=>window.__sj.SJ.units.filter(u=>u.side==='me'&&!u.gen).length"))
+        await E("()=>document.querySelector('#sjAutoD').click()"); await pg.wait_for_timeout(300)
+        await pg.screenshot(path=f'sj_{LANG}_deploy.png')
+        print('deployed',await E("()=>window.__sj.SJ.units.filter(u=>u.side==='me'&&!u.gen).map(u=>u.t).join(',')"),'spent',await E("()=>window.__sj.SJ.spent.me"))
+        await E("()=>document.querySelector('#sjGo').click()"); await pg.wait_for_timeout(2500)
+        u=await E("()=>{const J=window.__sj.SJ;const u=J.units.find(u=>u.side==='me'&&u.t==='horo')||J.units.find(u=>u.side==='me'&&!u.gen);return [u.x,u.y,u.t]}")
+        await tap(u[0],u[1]); await pg.wait_for_timeout(300)
+        print('touch select',await E("()=>window.__sj.SJ.sel.map(u=>u.t)"))
+        z=await E("()=>{const z=window.__sj.SJ.zones[1]||window.__sj.SJ.zones[0];return [z.x,z.y]}")
+        await tap(z[0],z[1]); await pg.wait_for_timeout(300)
+        print('order',await E("()=>{const u=window.__sj.SJ.sel[0];return u&&u.ord&&u.ord.k}"))
+        await E("()=>document.querySelector('#sjAll').click()"); await pg.wait_for_timeout(200)
+        print('select all',await E("()=>window.__sj.SJ.sel.length"))
+        await E("()=>document.querySelector('#sjPause').click()"); await pg.wait_for_timeout(200)
+        t0=await E("()=>window.__sj.SJ.t"); await pg.wait_for_timeout(800); t1=await E("()=>window.__sj.SJ.t")
+        print('paused holds time',t0==t1)
+        await E("()=>document.querySelector('#sjPause').click()")
+        await pg.wait_for_timeout(9000)
+        await pg.screenshot(path=f'sj_{LANG}_battle.png')
+        await E("()=>{const J=window.__sj.SJ;J.meter.me=999;document.querySelector('#sjPow').click()}"); await pg.wait_for_timeout(600)
+        await pg.screenshot(path=f'sj_{LANG}_power.png')
         await pg.wait_for_timeout(1500)
-        # watch for a split-screen clash during the enemy turn
-        seen=False
-        for _ in range(60):
-            if await E("()=>!!(window.__sj.SJ&&window.__sj.SJ.vs)"):
-                seen=True; await pg.wait_for_timeout(500); await pg.screenshot(path=f'sj_{LANG}_3.png'); break
-            if await E("()=>window.__sj.SJ&&window.__sj.SJ.turn==='me'"): break
-            await pg.wait_for_timeout(250)
-        print('clash seen',seen)
-        await E("()=>{const h=document.querySelector('#sjHelp');h&&h.click()}"); await pg.wait_for_timeout(400)
+        await E("()=>document.querySelector('#sjKei').click()"); await pg.wait_for_timeout(500)
+        print('stratagem used',await E("()=>window.__sj.SJ.keiUsed.me"))
+        await E("()=>{const h=document.querySelector('#sjHelp');h&&h.click()}"); await pg.wait_for_timeout(300)
         await pg.screenshot(path=f'sj_{LANG}_help.png')
-        await E("()=>{const h=document.querySelector('#sjHelpOv');h&&h.remove()}")
-        await E("()=>window.__sj.sjAutoTog()")
-        for _ in range(240):
-            await pg.wait_for_timeout(500)
-            if not await E("()=>!!document.querySelector('#sjOv')"): break
-        print('field done, day',await E("()=>window.__t&&0"))
-        await pg.wait_for_timeout(800); await pg.screenshot(path=f'sj_{LANG}_4.png'); await clear()
+        await E("()=>{const h=document.querySelector('#sjHelpX');h&&h.click()}")
+        await E("()=>document.querySelector('#sjAuto').click()")
+        await E("()=>{const J=window.__sj.SJ;J.spd=3}")
+        await finish()
+        await pg.screenshot(path=f'sj_{LANG}_after.png')
         # 2) sea, auto
-        await E("()=>{window.__v31.S.navy=3}")
-        await war('sea'); await pg.wait_for_timeout(1800); await pg.screenshot(path=f'sj_{LANG}_sea.png')
-        await E("()=>window.__sj.sjAutoTog()")
-        for _ in range(240):
-            await pg.wait_for_timeout(500)
-            if not await E("()=>!!document.querySelector('#sjOv')"): break
-        await clear()
-        # 3) defending the castle, then retreat
-        await war('def',True); await E("()=>{const J=window.__sj.SJ;if(J){J.auto.me=false;J.spd=1}window.__v31.S.autoFight=false}"); await pg.wait_for_timeout(1800); await pg.screenshot(path=f'sj_{LANG}_def.png')
-        await E("()=>{window.__sj.sjRetreat();window.__sj.sjRetreat()}")
-        await pg.wait_for_timeout(3000); await clear()
-        print('after retreat ov',await E("()=>!!document.querySelector('#sjOv')"))
-        # 4) board challenge (with a hostile war record), auto mode for the whole game
-        st=await war('rank',True); await pg.wait_for_timeout(500)
-        for _ in range(240):
-            await pg.wait_for_timeout(500)
-            if not await E("()=>!!document.querySelector('#sjOv')"): break
-        await clear()
+        await E("()=>{const B=JSON.parse(window.__base);B.navy=3;window.__base=JSON.stringify(B)}")
+        await war('sea',True); await finish()
+        # 3) defending the castle by hand, then retreat
+        await war('def'); await E("()=>{window.__sj.sjBegin()}"); await pg.wait_for_timeout(3000); await pg.screenshot(path=f'sj_{LANG}_def.png')
+        await E("()=>{window.__sj.sjRetreat();window.__sj.sjRetreat()}"); await finish(20)
+        # 4) board challenge, auto
+        await war('rank',True); await finish()
         print('screens',await E("()=>[...document.querySelectorAll('.screen')].filter(s=>!s.hidden).map(s=>s.id)"))
         print('ERRORS',len(errs)); print('\n'.join(errs[:30]))
         await b.close()

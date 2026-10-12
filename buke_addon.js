@@ -168,7 +168,7 @@ function bkTab(t,el,re){const B=BK();el.innerHTML='';const P_=s=>{const p=docume
    ['将軍',TX('השוגון','The shōgun'),TX('המפקד העליון ששולט בשם הקיסר. דורש: לכבוש את קיוטו.','The supreme commander who rules in the emperor’s name. Requires: taking Kyoto.'),'#5a4a9a'],
    ['大名',TX('הדאימיו','The daimyō'),TX('אדון של מחוזות וצבאות. דורש: 3 מחוזות.','A lord of provinces and armies. Requires: 3 provinces.'),'#8a1c1c'],
    ['武士',TX('הסמוראי','The samurai'),TX('לוחם בשירות אדון, עם שתי חרבות. דורש: דרגה 10 או מחוז.','A warrior in a lord’s service, wearing two swords. Requires: level 10 or a province.'),'#2a4a8a'],
-   ['足軽',TX('האשיגארו','The ashigaru'),TX('חייל רגלי עם חנית או רובה. מכאן מתחילים.','A foot soldier with spear or gun. This is where you start.'),'#5a4632'],
+   ['足軽',TX('האשיגארו','The ashigaru'),TX('חייל רגלי עם חנית או קשת. מכאן מתחילים.','A foot soldier with spear or bow. This is where you start.'),'#5a4632'],
    ['百姓',TX('האיכרים','The peasants'),TX('רוב העם. מגדלים את האורז שמאכיל את כולם.','Most of the people. They grow the rice that feeds everyone.'),'#7a7a6a']];
   L.forEach((r,i)=>{const d=bkRow(r[0],`${r[1]}${i===me?` <span class="tag done">${TX('אתה כאן','You are here')}</span>`:''}`,r[2],null);d.style.background=i===me?'rgba(230,180,80,.12)':'';d.querySelector('.kanji').style.color=r[3];el.append(d)});return}}
 /* the house door, in the hub */

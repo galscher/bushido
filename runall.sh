@@ -10,6 +10,8 @@ python3 -I mktest.py
 (timeout 900 python3 t2.py en > r_t2_en.log 2>&1 &)
 (timeout 900 python3 t24.py he > r_t24_he.log 2>&1 &)
 (timeout 900 python3 t24.py en > r_t24_en.log 2>&1 &)
+(timeout 600 python3 t25.py he > r_t25_he.log 2>&1 &)
+(timeout 600 python3 t25.py en > r_t25_en.log 2>&1 &)
 timeout 120 python3 t10.py > r_t10.log 2>&1
 timeout 120 python3 t15.py > r_t15.log 2>&1
 timeout 120 python3 t17.py > r_t17.log 2>&1
