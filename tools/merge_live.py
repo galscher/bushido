@@ -49,7 +49,8 @@ def drift(doc,lang):
       if a<0:continue
       e=min([x for x in [doc.find('/* ================= ',a+10),doc.find('if(false)window.__t={get CAMOV()')] if x>a]);b=(a,e)
     if not b:continue
-    if doc[b[0]:b[1]].strip()!=open(fn,encoding='utf8').read().strip():print('WARNING: the live',lang,'copy of',fn,'differs from the local file: adopt the live change before merging')
+    live=doc[b[0]:b[1]].strip()
+    if live!=open(fn,encoding='utf8').read().strip() and live!=subprocess.run(['git','show','HEAD:'+fn],capture_output=True,text=True).stdout.strip():print('WARNING: the live',lang,'copy of',fn,'differs from the local file: adopt the live change before merging')
 drift(he,'he');drift(en,'en')
 he,en=merge_am(merge(he)),merge_am(merge(en))
 with tempfile.TemporaryDirectory() as d:

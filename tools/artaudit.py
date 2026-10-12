@@ -10,11 +10,16 @@ HOOK=("window.__aud={mk:(s,p)=>makeFighter(s,p),aid:f=>artIdOf(f),dims:(f)=>{try
  "src:()=>{const L=[];const add=(k,fd)=>{try{if(fd)L.push([k,fd])}catch(e){}};"
  "try{LADDER.forEach((x,i)=>add('ladder:'+i,foeData(i)))}catch(e){}"
  "try{HUNTS.forEach(h=>add('hunt:'+h.id,huntFoe(h)))}catch(e){}"
- "try{CITIES.slice(0,12).forEach(c=>add('city:'+c.id,cityFoe(c)))}catch(e){}"
+ "try{CITIES.forEach(c=>add('city:'+c.id,cityFoe(c)))}catch(e){}"
  "try{FOREIGN.forEach(f=>add('foreign:'+f.id,foreignFoe(f)))}catch(e){}"
  "try{Object.keys(SGF).forEach(id=>add('saga:'+id,sgFoe(id)))}catch(e){}"
  "try{HEROES.forEach((h,i)=>add('hero:'+h.id,{name:h.name,level:10,stats:h.stats,wk:h.wk,forge:2,armor:2,look:h.look}))}catch(e){}"
  "try{add('bounty',bhHunterFoe())}catch(e){}"
+ "try{bhList().forEach(o=>add('bh:'+o.i,bhFoe(o)))}catch(e){}"
+ "try{add('streak',streakFoe())}catch(e){}"
+ "try{['yari','kiba','yumi'].forEach((w,i)=>add('rank:'+w,rkFoe({id:'zz'+i,name:'T'+i,hp:100,emp:{ap:300,gm:1.1,lv:8+i*20,hero:i,wr:{[w]:3}}})))}catch(e){}"
+ "try{EMPIRES.forEach(m=>add('emp:'+m.id,foreignFoe(m)))}catch(e){}"
+ "try{add('rebel',kdRebFoe({}))}catch(e){}"
  "try{['kumagoro','ryuzan','x'].forEach(w=>add('market:'+w,uwFoe(w)))}catch(e){}"
  "return L}};")
 async def main():
@@ -40,6 +45,8 @@ async def main():
         # preload all art, then measure
         await E("()=>{for(const id in window.__art.ART){try{const A=window.__art.ART[id];for(const k in A){const a=A[k];if(a&&a.d&&!a.img){const im=new Image();im.src=a.d.src;a.img=im}}}catch(e){}}}")
         await pg.wait_for_timeout(4000)
+        await E("()=>{for(const[k,fd] of window.__aud.src()){try{window.__aud.mk(fd,k.startsWith('hero:'))}catch(e){}}}")
+        await pg.wait_for_timeout(9000)
         res=await E("""()=>{const A=window.__aud,out=[];for(const[k,fd] of A.src()){let r={k,name:fd.name};try{const f=A.mk(fd,k.startsWith('hero:'));f.facing=1;r.art=A.aid(f);
           const c=document.createElement('canvas');c.width=600;c.height=700;const g=c.getContext('2d');A.draw(g,f,300,620,1);
           const d=g.getImageData(0,0,600,700).data;let x0=600,y0=700,x1=-1,y1=-1;for(let y=0;y<700;y++)for(let x=0;x<600;x++)if(d[(y*600+x)*4+3]>40){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}

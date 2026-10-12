@@ -44,7 +44,7 @@ Python 3 with Pillow, numpy, scipy and Playwright (Chromium is preinstalled in C
 - **Audit:** `python3 -I tools/artaudit.py PAGE.html OUT.json` draws every arena fighter (ladder, hunts, cities, foreign,
   saga, heroes, bounty, market), prints who has art and the height, and writes `OUT_lineup.png` (green label = art).
   The page is written beside `art/` (relative art paths) and Chromium runs with file access, or the art won't load.
-- **Still drawn by code — the next sheets to make** (2x2 green screen, facing right, same style as the ladder art):
+- **Next sheets: see `art/BRIEF_characters.md`** (every character described on its own; the owner rejects recolours as originality). Old summary: (2x2 green screen, facing right, same style as the ladder art):
   - saga generals: kiyomasa (Katō, tall eboshi helmet, spear), naomasa / naotaka (Ii red armour), yamagata (red, Takeda),
     baba, kansuke (one-eyed strategist), kakizaki, shibata, mitsuhide / hidemitsu (Akechi, blue), otani (white hood,
     leper general), ukon (Takayama), yoshimoto (Imagawa, court robe, blackened teeth), ranmaru (young page), shinsuke,
@@ -56,6 +56,15 @@ Python 3 with Pillow, numpy, scipy and Playwright (Chromium is preinstalled in C
   - hunts: raiju (thunder beast), umibozu (black sea monk).
   - sea battle (`seaMon`): isonade (hook-finned shark), umibozu, bakekujira (ghost whale skeleton) — one wide sheet each.
   - advisers (`CAST`, 37 portraits in `drawCast`): only the `por` cell is needed for these.
+- **The variant studio (絵師, in `artmap_addon.js`)**: every arena face that had no illustration now gets one, made in the
+  browser from our own art: `AMV` names a base body that fits the person and a house colour; `amRecolor` repaints armour
+  and cloth (skin and gold lacing kept, dark lacquer tinted, a beast's fur darkened), once per pose, cached as an image.
+  Province lords take the body of their helmet type (`AMV_HELM`) in their `armorCol`. The audit now reads 92/92 illustrated.
+  When the art chat draws a real sheet for one of them, give it the same id without the `v_` prefix in `AMAP_SG`/
+  `AMAP_HUNT` (a real illustration always wins over a variant). Sea battle: Umibōzu and Bakekujira use variants too.
+- Camp tiles that were flat drawings (sea, castle town, treasury, sumo, trade, tech, court, apothecary, workshop,
+  province) are repainted as 16-bit scenes in `SCN` (`amsea`…`amvil`), animated by the normal scene loop. The 武者 tile
+  shows your warrior; the wanted poster shows your illustrated face in ink.
 - Free sprite packs were checked: the samurai packs online are 64×64 pixel art at another scale and palette, the LPC set
   is CC-BY-SA/GPL (attribution, share-alike) and top-down; opengameart/itch are not reachable from here. Don't mix them in.
 
