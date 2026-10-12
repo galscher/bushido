@@ -4,3 +4,7 @@ game_test.html
 site/out/
 art/_*_preview.png
 __pycache__/
+sj_*.png
+vis_*.png
+cr_*.png
+vis_cv*.png
